@@ -8,9 +8,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.swing.tree.RowMapper;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class Database implements CommandLineRunner {
@@ -23,20 +26,12 @@ public class Database implements CommandLineRunner {
 
         // Create the employee table
         jdbcTemplate.execute("DROP TABLE employee IF EXISTS");
-        jdbcTemplate.execute("CREATE TABLE employee ( PRIMARY KEY (id), id INT, first_name VARCHAR(255), " +
-                "last_name VARCHAR(255), email VARCHAR(255), phone VARCHAR(255), address VARCHAR(255), " +
-                "hire_date VARCHAR(255), department VARCHAR(255), salary INT) ");
+        jdbcTemplate.execute("CREATE TABLE employee ( PRIMARY KEY (id), id INT AUTO_INCREMENT, " +
+                "first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), phone VARCHAR(255), " +
+                "address VARCHAR(255), hire_date VARCHAR(255), department VARCHAR(255), salary INT) ");
 
         // Insert our test data into the database by parsing a CSV file
-        insertTestData("employee_data.csv");
-
-        // Print out the contents of the employee table
-        jdbcTemplate.query("SELECT * FROM employee", (rs, rowNum) -> new Employee(
-                rs.getInt("id"), rs.getString("first_name"),
-                rs.getString("last_name"), rs.getString("email"),
-                rs.getString("phone"), rs.getString("address"),
-                rs.getString("hire_date"), rs.getString("department"),
-                rs.getInt("salary"))).forEach(employee -> System.out.println(employee.toString()));
+        insertTestData("src/main/resources/employee_data.csv");
     }
 
     public void insertTestData(String path) {
@@ -55,5 +50,31 @@ public class Database implements CommandLineRunner {
         catch (IOException e) {
             System.out.println("ERROR: " + e);
         }
+    }
+
+    public List<Employee> listAll() {
+        return new ArrayList<>(jdbcTemplate.query("SELECT * FROM employee", (rs, rowNum) -> new Employee(
+                rs.getInt("id"), rs.getString("first_name"),
+                rs.getString("last_name"), rs.getString("email"),
+                rs.getString("phone"), rs.getString("address"),
+                rs.getString("hire_date"), rs.getString("department"),
+                rs.getInt("salary"))));
+    }
+
+    public List<Employee> listID(Integer id) {
+        String sql = "SELECT * FROM employee WHERE id = " + String.valueOf(id);
+        return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> new Employee(
+                rs.getInt("id"), rs.getString("first_name"),
+                rs.getString("last_name"), rs.getString("email"),
+                rs.getString("phone"), rs.getString("address"),
+                rs.getString("hire_date"), rs.getString("department"),
+                rs.getInt("salary"))));
+    }
+
+    public void createEmployee(Employee employee) {
+        jdbcTemplate.update("INSERT INTO employee(first_name, last_name, email, phone, " +
+                        "address, hire_date, department, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhone(),
+                employee.getAddress(), employee.getHireDate(), employee.getDepartment(), employee.getSalary());
     }
 }

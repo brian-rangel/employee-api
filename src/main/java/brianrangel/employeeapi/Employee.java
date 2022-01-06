@@ -11,6 +11,8 @@ public class Employee {
     private String department;
     private Integer salary;
 
+    public Employee() {}
+
     public Employee(Integer id, String firstName, String lastName, String email, String phone,
                     String address, String hireDate, String department, Integer salary) {
         this.id = id;
