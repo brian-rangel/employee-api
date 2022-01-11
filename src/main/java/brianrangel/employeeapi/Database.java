@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.swing.tree.RowMapper;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -30,10 +29,11 @@ public class Database implements CommandLineRunner {
                 "first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), phone VARCHAR(255), " +
                 "address VARCHAR(255), hire_date VARCHAR(255), department VARCHAR(255), salary INT) ");
 
-        // Insert our test data into the database by parsing a CSV file
+        // Fill the database with test data
         insertTestData("src/main/resources/employee_data.csv");
     }
 
+    // Insert our test data into the database by parsing a CSV file
     public void insertTestData(String path) {
         try {
             Reader file = new FileReader(path);
@@ -52,29 +52,60 @@ public class Database implements CommandLineRunner {
         }
     }
 
-    public List<Employee> listAll() {
-        return new ArrayList<>(jdbcTemplate.query("SELECT * FROM employee", (rs, rowNum) -> new Employee(
-                rs.getInt("id"), rs.getString("first_name"),
-                rs.getString("last_name"), rs.getString("email"),
-                rs.getString("phone"), rs.getString("address"),
-                rs.getString("hire_date"), rs.getString("department"),
-                rs.getInt("salary"))));
-    }
-
-    public List<Employee> listID(Integer id) {
-        String sql = "SELECT * FROM employee WHERE id = " + String.valueOf(id);
+    // Query the database using an SQL statement passed through as a parameter
+    public List<Employee> queryDatabase(String sql) {
         return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> new Employee(
-                rs.getInt("id"), rs.getString("first_name"),
-                rs.getString("last_name"), rs.getString("email"),
-                rs.getString("phone"), rs.getString("address"),
-                rs.getString("hire_date"), rs.getString("department"),
+                rs.getInt("id"),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("address"),
+                rs.getString("hire_date"),
+                rs.getString("department"),
                 rs.getInt("salary"))));
     }
 
-    public void createEmployee(Employee employee) {
-        jdbcTemplate.update("INSERT INTO employee(first_name, last_name, email, phone, " +
-                        "address, hire_date, department, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhone(),
-                employee.getAddress(), employee.getHireDate(), employee.getDepartment(), employee.getSalary());
+    // List all data from the database
+    public List<Employee> selectAll() {
+        return queryDatabase("SELECT * FROM employee");
+    }
+
+    // Create an SQL statement using the WHERE clause to filter through the database
+    public List<Employee> selectWhere(Integer id, String firstName, String lastName, String email, String phone,
+                                 String address, String hireDate, String department, String salaryOpt, Integer salary) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT * FROM employee WHERE ");
+        Boolean calledLast = false;
+
+        // Check for all conditions. If it is not null, add it to the SQL statement
+        if (id != null) { stringBuilder.append("id = " + id + " AND "); }
+        if (!firstName.isEmpty()) { stringBuilder.append("first_name LIKE '%" + firstName + "%' AND "); }
+        if (!lastName.isEmpty()) { stringBuilder.append("last_name LIKE '%" + lastName + "%' AND "); }
+        if (!email.isEmpty()) { stringBuilder.append("email LIKE '%" + email + "%' AND "); }
+        if (!phone.isEmpty()) { stringBuilder.append("phone LIKE '%" + phone + "%' AND "); }
+        if (!address.isEmpty()) { stringBuilder.append("address LIKE '%" + address + "%' AND "); }
+        if (!hireDate.isEmpty()) { stringBuilder.append("hire_date LIKE '%" + hireDate + "%' AND "); }
+        if (department != null) { stringBuilder.append("department LIKE '%" + department + "%' AND "); }
+
+        if (salary != null) {
+            if (salaryOpt.equals("=")) {
+                stringBuilder.append("salary = " + salary);
+            }
+            else if (salaryOpt.equals(">")) {
+                stringBuilder.append("salary > " + salary);
+            }
+            else if (salaryOpt.equals("<")) {
+                stringBuilder.append("salary < " + salary);
+            }
+            calledLast = true;
+        }
+
+        // If salary wasn't the last condition in the statement, remove the AND clause
+        if (!calledLast) { stringBuilder.delete(stringBuilder.length() - 4, stringBuilder.length()); }
+
+        // Return the SQL statement that we created
+        return queryDatabase(stringBuilder.toString());
     }
 }

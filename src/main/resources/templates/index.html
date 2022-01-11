@@ -6,7 +6,8 @@
         <link href="styles.css" type="text/css" rel="stylesheet">
     </head>
     <body>
-        <h1 class="banner">Employee Data</h1>
+        <h1 class="banner">Employee Database</h1>
+        <div style="overflow:auto">
         <table class="table-body">
             <thead>
                 <tr>
@@ -24,16 +25,38 @@
             </thead>
             <tbody>
                 <tr>
-                    <form class="filter">
-                        <td><input type="number" id="id" name="id" placeholder="ID"></td>
-                        <td><input type="text" id="firstName" name="firstName" placeholder="First Name"></td>
-                        <td><input type="text" id="lastName" name="lastName" placeholder="Last Name"></td>
-                        <td><input type="text" id="email" name="email" placeholder="Email"></td>
-                        <td><input type="text" id="phone" name="phone" placeholder="Phone"></td>
-                        <td><input type="text" id="address" name="address" placeholder="Address"></td>
-                        <td><input type="text" id="hireDate" name="hireDate" placeholder="Hire Date"></td>
-                        <td><input type="text" id="department" name="department" placeholder="Department"></td>
-                        <td><input type="number" id="salary" name="salary" placeholder="Salary"></td>
+                    <form>
+                        <td><input style="min-width: 45px" type="number" name="id" placeholder="ID"></td>
+                        <td><input style="min-width: 80px" type="text" name="firstName" placeholder="First Name"></td>
+                        <td><input type="text" name="lastName" placeholder="Last Name"></td>
+                        <td><input type="text" name="email" placeholder="Email"></td>
+                        <td><input style="min-width: 95px" type="text" name="phone" placeholder="Phone"></td>
+                        <td><input type="text" name="address" placeholder="Address"></td>
+                        <td><input type="text" name="hireDate" placeholder="Hire Date"></td>
+                        <td>
+                            <select name="department" class="department">
+                                <option value="" disabled selected hidden>Department</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Business Development">Business Development</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="Legal">Legal</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Product Management">Product Management</option>
+                                <option value="Research and Development">Research and Development</option>
+                                <option value="Services">Services</option>
+                                <option value="Support">Support</option>
+                                <option value="Training">Training</option>
+                            </select>
+                        </td>
+                        <td class="salary">
+                            <select name="salaryOpt">
+                                <option value="=">=</option>
+                                <option value=">">></option>
+                                <option value="<"><</option>
+                            </select>
+                            <input style="min-width: 70px" type="number" name="salary" placeholder="Salary" onclick="salary()">
+                        </td>
                         <td>
                             <div class="action">
                                 <button type="submit">Search</button>
@@ -62,5 +85,6 @@
                 </tr>
             </tbody>
         </table>
+        </div>
     </body>
 </html>

@@ -13,7 +13,7 @@ public class EmployeeAPIController {
     Database database = new Database();
 
     @RequestMapping("/employee-api")
-    public String index(Model model, @RequestParam (required = false) Integer id,
+    public String index(@RequestParam (required = false) Integer id,
                         @RequestParam (required = false) String firstName,
                         @RequestParam (required = false) String lastName,
                         @RequestParam (required = false) String email,
@@ -21,13 +21,19 @@ public class EmployeeAPIController {
                         @RequestParam (required = false) String address,
                         @RequestParam (required = false) String hireDate,
                         @RequestParam (required = false) String department,
-                        @RequestParam (required = false) Integer salary) {
+                        @RequestParam (required = false) String salaryOpt,
+                        @RequestParam (required = false) Integer salary,
+                        Model model) {
 
+        // Display all employees from the database
         if (id == null && firstName == null && lastName == null && email == null && phone == null &&
                 address == null && hireDate == null && department == null && salary == null) {
-            model.addAttribute("employees", database.listAll());
-        } else {
-            model.addAttribute("employees", database.listID(id));
+            model.addAttribute("employees", database.selectAll());
+        }
+        // Filter through the database to only get the employees we want
+        else {
+            model.addAttribute("employees", database.selectWhere(id, firstName, lastName, email, phone,
+                    address, hireDate, department, salaryOpt, salary));
         }
         return "index";
     }

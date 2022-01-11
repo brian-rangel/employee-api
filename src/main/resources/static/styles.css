@@ -1,6 +1,8 @@
 body {
     background-color: rgb(58, 58, 58);
     margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
 }
 
 .banner {
@@ -23,11 +25,28 @@ body {
 
 .table-body td {
     background: rgb(135, 205, 235);
+    padding: 6px 4px;
 }
 
 input {
     box-sizing: border-box;
     width: 100%;
+}
+
+.department {
+    color: rgb(117, 117, 117);
+    width: 100%;
+    min-width: 95px;
+}
+
+.department option {
+    color: rgb(0, 0, 0);
+}
+
+.salary {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .action {
