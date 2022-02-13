@@ -6,85 +6,138 @@
         <link href="styles.css" type="text/css" rel="stylesheet">
     </head>
     <body>
-        <h1 class="banner">Employee Database</h1>
-        <div style="overflow:auto">
-        <table class="table-body">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Hire Date</th>
-                    <th>Department</th>
-                    <th>Salary</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <form>
-                        <td><input style="min-width: 45px" type="number" name="id" placeholder="ID"></td>
-                        <td><input style="min-width: 80px" type="text" name="firstName" placeholder="First Name"></td>
-                        <td><input type="text" name="lastName" placeholder="Last Name"></td>
-                        <td><input type="text" name="email" placeholder="Email"></td>
-                        <td><input style="min-width: 95px" type="text" name="phone" placeholder="Phone"></td>
-                        <td><input type="text" name="address" placeholder="Address"></td>
-                        <td><input type="text" name="hireDate" placeholder="Hire Date"></td>
-                        <td>
-                            <select name="department" class="department">
-                                <option value="" disabled selected hidden>Department</option>
-                                <option value="Accounting">Accounting</option>
-                                <option value="Business Development">Business Development</option>
-                                <option value="Engineering">Engineering</option>
-                                <option value="Human Resources">Human Resources</option>
-                                <option value="Legal">Legal</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Product Management">Product Management</option>
-                                <option value="Research and Development">Research and Development</option>
-                                <option value="Services">Services</option>
-                                <option value="Support">Support</option>
-                                <option value="Training">Training</option>
-                            </select>
+        <h2 class="header">Employee Database</h2>
+        <div class="banner-back">
+            <form action="employee-api/add" class="banner">
+                <div style="min-width: 90px">
+                    <label>New Employee:</label><br>
+                    <a>
+                        <button type="submit">Create</button>
+                    </a>
+                </div>
+                <div>
+                    <label>First Name</label><br>
+                    <input type="text" name="firstName" required><br>
+                </div>
+                <div>
+                    <label>Last Name</label><br>
+                    <input type="text" name="lastName" required><br>
+                </div>
+                <div>
+                    <label>Email</label><br>
+                    <input type="text" name="email" required><br>
+                </div>
+                <div>
+                    <label>Phone</label><br>
+                    <input type="text" name="phone" required><br>
+                </div>
+                <div>
+                    <label>Address</label><br>
+                    <input type="text" name="address" required><br>
+                </div>
+                <div>
+                    <label>Hire Date</label><br>
+                    <input type="text" name="hireDate" required><br>
+                </div>
+                <div>
+                    <label>Department</label><br>
+                    <select name="department" required>
+                        <option value="" disabled selected hidden></option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Business Development">Business Development</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Product Management">Product Management</option>
+                        <option value="Research and Development">Research and Development</option>
+                        <option value="Services">Services</option>
+                        <option value="Support">Support</option>
+                        <option value="Training">Training</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Salary</label><br>
+                    <input type="number" name="salary" required><br>
+                </div>
+            </form>
+        </div>
+        <div style="overflow: auto">
+            <table class="table-body">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Hire Date</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <form>
+                            <td><input style="min-width: 45px" type="number" name="id" placeholder="ID"></td>
+                            <td><input style="min-width: 80px" type="text" name="firstName" placeholder="First Name"></td>
+                            <td><input type="text" name="lastName" placeholder="Last Name"></td>
+                            <td><input type="text" name="email" placeholder="Email"></td>
+                            <td><input style="min-width: 95px" type="text" name="phone" placeholder="Phone"></td>
+                            <td><input type="text" name="address" placeholder="Address"></td>
+                            <td><input type="text" name="hireDate" placeholder="Hire Date"></td>
+                            <td>
+                                <select name="department" class="department">
+                                    <option value="" disabled selected hidden>Department</option>
+                                    <option value="Accounting">Accounting</option>
+                                    <option value="Business Development">Business Development</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                    <option value="Legal">Legal</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Product Management">Product Management</option>
+                                    <option value="Research and Development">Research and Development</option>
+                                    <option value="Services">Services</option>
+                                    <option value="Support">Support</option>
+                                    <option value="Training">Training</option>
+                                </select>
+                            </td>
+                            <td class="salary">
+                                <select name="salaryOpt">
+                                    <option value="=">=</option>
+                                    <option value=">">></option>
+                                    <option value="<"><</option>
+                                </select>
+                                <input style="min-width: 70px" type="number" name="salary" placeholder="Salary">
+                            </td>
+                            <td>
+                                <div class="action">
+                                    <button class="search" type="submit">Search</button>
+                                    <a href="employee-api"><button class="reset" type="button">Reset</button></a>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                    <tr th:each="employee : ${employees}">
+                        <td>[[${employee.id}]]</td>
+                        <td>[[${employee.firstName}]]</td>
+                        <td>[[${employee.lastName}]]</td>
+                        <td>[[${employee.email}]]</td>
+                        <td>[[${employee.phone}]]</td>
+                        <td>[[${employee.address}]]</td>
+                        <td>[[${employee.hireDate}]]</td>
+                        <td>[[${employee.department}]]</td>
+                        <td>[[${employee.salary}]]</td>
+                        <td class="delete-btn">
+                            <a th:href="@{'employee-api/delete/' + ${employee.id}}">
+                                <button type="button">Delete</button>
+                            </a>
                         </td>
-                        <td class="salary">
-                            <select name="salaryOpt">
-                                <option value="=">=</option>
-                                <option value=">">></option>
-                                <option value="<"><</option>
-                            </select>
-                            <input style="min-width: 70px" type="number" name="salary" placeholder="Salary" onclick="salary()">
-                        </td>
-                        <td>
-                            <div class="action">
-                                <button type="submit">Search</button>
-                                <a href="employee-api"><button type="button">Reset</button></a>
-                            </div>
-                        </td>
-
-                    </form>
-                </tr>
-                <tr th:each="employee : ${employees}">
-                    <td>[[${employee.id}]]</td>
-                    <td>[[${employee.firstName}]]</td>
-                    <td>[[${employee.lastName}]]</td>
-                    <td>[[${employee.email}]]</td>
-                    <td>[[${employee.phone}]]</td>
-                    <td>[[${employee.address}]]</td>
-                    <td>[[${employee.hireDate}]]</td>
-                    <td>[[${employee.department}]]</td>
-                    <td>[[${employee.salary}]]</td>
-                    <td>
-                        <div class="action">
-                            <a href="">Edit</a>
-                            <a href="">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

@@ -3,6 +3,7 @@ package brianrangel.employeeapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,5 +37,30 @@ public class EmployeeAPIController {
                     address, hireDate, department, salaryOpt, salary));
         }
         return "index";
+    }
+
+    @RequestMapping("/employee-api/add")
+    public String addEmployee(@RequestParam String firstName,
+                              @RequestParam String lastName,
+                              @RequestParam String email,
+                              @RequestParam String phone,
+                              @RequestParam String address,
+                              @RequestParam String hireDate,
+                              @RequestParam String department,
+                              @RequestParam Integer salary,
+                              Model model) {
+
+        // Create an employee with the following data
+        database.addEmployee(firstName, lastName, email, phone, address, hireDate, department, salary);
+
+        return "redirect:/employee-api";
+    }
+
+    @RequestMapping("/employee-api/delete/{id}")
+    public String deleteEmployee(@PathVariable Integer id) {
+
+        // Delete the employee with the specified ID
+        database.deleteEmployee(id);
+        return "redirect:/employee-api";
     }
 }

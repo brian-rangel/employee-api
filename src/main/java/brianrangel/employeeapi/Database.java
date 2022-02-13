@@ -108,4 +108,19 @@ public class Database implements CommandLineRunner {
         // Return the SQL statement that we created
         return queryDatabase(stringBuilder.toString());
     }
+
+    // Add a new employee to the database
+    public void addEmployee(String firstName, String lastName, String email, String phone, String address,
+                            String hireDate, String department, Integer salary) {
+
+        jdbcTemplate.update("INSERT INTO employee(" +
+                        "first_name, last_name, email, phone, address, hire_date, department, salary) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                        firstName, lastName, email, phone, address, hireDate, department, salary);
+    }
+
+    // Delete an employee from the database
+    public void deleteEmployee(Integer id) {
+        jdbcTemplate.update("DELETE FROM employee WHERE ID = " + id);
+    }
 }
