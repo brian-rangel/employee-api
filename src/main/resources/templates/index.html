@@ -7,60 +7,125 @@
     </head>
     <body>
         <h2 class="header">Employee Database</h2>
-        <div class="banner-back">
-            <form action="employee-api/add" class="banner">
-                <div style="min-width: 90px">
-                    <label>New Employee:</label><br>
-                    <a>
-                        <button type="submit">Create</button>
-                    </a>
-                </div>
-                <div>
-                    <label>First Name</label><br>
-                    <input type="text" name="firstName" required><br>
-                </div>
-                <div>
-                    <label>Last Name</label><br>
-                    <input type="text" name="lastName" required><br>
-                </div>
-                <div>
-                    <label>Email</label><br>
-                    <input type="text" name="email" required><br>
-                </div>
-                <div>
-                    <label>Phone</label><br>
-                    <input type="text" name="phone" required><br>
-                </div>
-                <div>
-                    <label>Address</label><br>
-                    <input type="text" name="address" required><br>
-                </div>
-                <div>
-                    <label>Hire Date</label><br>
-                    <input type="text" name="hireDate" required><br>
-                </div>
-                <div>
-                    <label>Department</label><br>
-                    <select name="department" required>
-                        <option value="" disabled selected hidden></option>
-                        <option value="Accounting">Accounting</option>
-                        <option value="Business Development">Business Development</option>
-                        <option value="Engineering">Engineering</option>
-                        <option value="Human Resources">Human Resources</option>
-                        <option value="Legal">Legal</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Product Management">Product Management</option>
-                        <option value="Research and Development">Research and Development</option>
-                        <option value="Services">Services</option>
-                        <option value="Support">Support</option>
-                        <option value="Training">Training</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Salary</label><br>
-                    <input type="number" name="salary" required><br>
-                </div>
-            </form>
+        <div class="tabs">
+            <input type="radio" id="create-tab" name="tabs" checked="checked">
+            <label class="tab-label" for="create-tab">Create Employee</label>
+            <div class="tab">
+                <form action="/create">
+                    <div class="button-section">
+                        <label style="font-size: 11px">Required Data:</label><br>
+                        <a>
+                            <button type="submit" class="create">Create</button>
+                        </a>
+                    </div>
+                    <div>
+                        <label>First Name</label><br>
+                        <input type="text" name="firstName" required><br>
+                    </div>
+                    <div>
+                        <label>Last Name</label><br>
+                        <input type="text" name="lastName" required><br>
+                    </div>
+                    <div>
+                        <label>Email</label><br>
+                        <input type="text" name="email" required><br>
+                    </div>
+                    <div>
+                        <label>Phone</label><br>
+                        <input type="text" name="phone" required><br>
+                    </div>
+                    <div>
+                        <label>Address</label><br>
+                        <input type="text" name="address" required><br>
+                    </div>
+                    <div>
+                        <label>Hire Date</label><br>
+                        <input type="text" name="hireDate" required><br>
+                    </div>
+                    <div>
+                        <label>Department</label><br>
+                        <select name="department" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Accounting">Accounting</option>
+                            <option value="Business Development">Business Development</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Legal">Legal</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Product Management">Product Management</option>
+                            <option value="Research and Development">Research and Development</option>
+                            <option value="Services">Services</option>
+                            <option value="Support">Support</option>
+                            <option value="Training">Training</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Salary</label><br>
+                        <input type="number" name="salary" required><br>
+                    </div>
+                </form>
+            </div>
+            <input type="radio" id="update-tab" name="tabs">
+            <label class="tab-label" for="update-tab">Update Employee</label>
+            <div class="tab">
+                <form action="/update" class="banner">
+                    <div class="button-section">
+                        <label style="font-size: 11px">Specify an ID:</label><br>
+                        <a>
+                            <button type="submit" class="update" >Update</button>
+                        </a>
+                    </div>
+                    <div>
+                        <label>ID</label><br>
+                        <input type="number" name="id" required><br>
+                    </div>
+                    <div>
+                        <label>First Name</label><br>
+                        <input type="text" name="firstName"><br>
+                    </div>
+                    <div>
+                        <label>Last Name</label><br>
+                        <input type="text" name="lastName"><br>
+                    </div>
+                    <div>
+                        <label>Email</label><br>
+                        <input type="text" name="email"><br>
+                    </div>
+                    <div>
+                        <label>Phone</label><br>
+                        <input type="text" name="phone"><br>
+                    </div>
+                    <div>
+                        <label>Address</label><br>
+                        <input type="text" name="address"><br>
+                    </div>
+                    <div>
+                        <label>Hire Date</label><br>
+                        <input type="text" name="hireDate"><br>
+                    </div>
+                    <div>
+                        <label>Department</label><br>
+                        <select name="department">
+                            <option value="" disabled selected hidden></option>
+                            <option value="Accounting">Accounting</option>
+                            <option value="Business Development">Business Development</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Legal">Legal</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Product Management">Product Management</option>
+                            <option value="Research and Development">Research and Development</option>
+                            <option value="Services">Services</option>
+                            <option value="Support">Support</option>
+                            <option value="Training">Training</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Salary</label><br>
+                        <input type="number" name="salary"><br>
+                    </div>
+                </form>
+            </div>
         </div>
         <div style="overflow: auto">
             <table class="table-body">
@@ -115,7 +180,7 @@
                             <td>
                                 <div class="action">
                                     <button class="search" type="submit">Search</button>
-                                    <a href="employee-api"><button class="reset" type="button">Reset</button></a>
+                                    <a href="/"><button class="reset" type="button">Reset</button></a>
                                 </div>
                             </td>
                         </form>
@@ -131,7 +196,7 @@
                         <td>[[${employee.department}]]</td>
                         <td>[[${employee.salary}]]</td>
                         <td class="delete-btn">
-                            <a th:href="@{'employee-api/delete/' + ${employee.id}}">
+                            <a th:href="@{'/delete/' + ${employee.id}}">
                                 <button type="button">Delete</button>
                             </a>
                         </td>

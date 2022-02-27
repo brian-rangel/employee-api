@@ -14,61 +14,123 @@ body {
     padding: 10px 0px;
 }
 
-/* Banner */
-.banner-back {
+/* Tabs */
+.tabs {
     background-color: rgb(245, 245, 245);
-    height: 60px;
     display: flex;
-    align-items: center
+    flex-wrap: wrap;
+    padding: 6px 4px;
 }
 
-.banner {
-    background: rgb(215, 215, 215);
+.tabs .tab-label {
+    background-color: rgb(230, 230, 230);
+    color: rgb(100, 100, 100);
+    border: 2px solid rgb(230, 230, 230);
+    border-radius: 8px 8px 0px 0px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px;
+}
+
+.tabs .tab-label:hover {
+    background-color: rgb(220, 220, 220);
+    color: rgb(80, 80, 80);
+    border: 2px solid rgb(220, 220, 220);
+}
+
+.tabs .tab {
+    background: rgb(205, 205, 205);
     border: 2px solid rgb(205, 205, 205);
-    border-radius: 5px;
-    height: 40px;
+    border-radius: 0px 8px 8px 8px;
     width: 100%;
-    margin: 0px 5px;
+    padding: 6px;
+    height: 30px;
+    order: 1;
+    display: none;
+}
+
+.tabs input[type="radio"]:checked + label + .tab {
+    display: flex;
+}
+
+.tabs input[type="radio"]:checked + label {
+    background: rgb(205, 205, 205);
+    color: rgb(30, 30, 30);
+    border: 2px solid rgb(205, 205, 205);
+    border-radius: 8px 8px 0px 0px;
+}
+
+.tabs input[type="radio"] {
+    display: none;
+}
+
+/* Create & Update forms */
+.tabs form {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0px 4px;
+    width: 100%;
 }
 
-.banner button {
+.tabs form div {
+    margin: 0px 4px;
+    width: 100%;
+}
+
+.tabs form label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.tabs form input {
+    background: rgb(250, 250, 250);
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 4px;
+}
+
+.tabs form select {
+    background: rgb(250, 250, 250);
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 4px;
+    width: 100%;
+}
+
+.update {
+    background-color: rgb(255, 150, 10);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 150, 10);
+    border-radius: 5px;
+}
+
+.create {
     background-color: rgb(60, 190, 100);
     color: rgb(255, 255, 255);
     border: 2px solid rgb(60, 190, 100);
     border-radius: 5px;
 }
 
-.banner button:hover {
+.create:hover {
     background-color: rgb(80, 210, 130);
     color: rgb(255, 255, 255);
     border: 2px solid rgb(80, 210, 130);
     border-radius: 5px;
 }
 
-.banner div {
-    margin: 0px 4px;
+.update:hover {
+    background-color: rgb(255, 180, 40);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 180, 40);
+    border-radius: 5px;
 }
 
-.banner label {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.banner input {
-    background: rgb(250, 250, 250);
-    border: 1px solid rgb(150, 150, 150);
-    border-radius: 4px;
-}
-
-.banner select {
-    background: rgb(250, 250, 250);
-    border: 1px solid rgb(150, 150, 150);
-    border-radius: 4px;
-    width: 100%;
+.button-section {
+    font-size: 11px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 8px;
+    min-width: 90px;
+    flex: 1 2 auto
 }
 
 /* Table */
@@ -123,17 +185,12 @@ input {
     justify-content: space-around;
 }
 
-.action {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
 .search {
     background-color: rgb(60, 130, 210);
     color: rgb(255, 255, 255);
     border: 2px solid rgb(60, 130, 210);
     border-radius: 5px;
+    margin-right: 2px;
 }
 
 .search:hover {
@@ -148,6 +205,7 @@ input {
     color: rgb(255, 255, 255);
     border: 2px solid rgb(140, 140, 145);
     border-radius: 5px;
+    margin-left: 2px;
 }
 
 .reset:hover {

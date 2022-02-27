@@ -25,9 +25,17 @@ public class Database implements CommandLineRunner {
 
         // Create the employee table
         jdbcTemplate.execute("DROP TABLE employee IF EXISTS");
-        jdbcTemplate.execute("CREATE TABLE employee ( PRIMARY KEY (id), id INT AUTO_INCREMENT, " +
-                "first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), phone VARCHAR(255), " +
-                "address VARCHAR(255), hire_date VARCHAR(255), department VARCHAR(255), salary INT) ");
+        jdbcTemplate.execute("CREATE TABLE employee ( " +
+                "PRIMARY KEY (id), " +
+                "id INT AUTO_INCREMENT, " +
+                "first_name VARCHAR(255), " +
+                "last_name VARCHAR(255), " +
+                "email VARCHAR(255), " +
+                "phone VARCHAR(255), " +
+                "address VARCHAR(255), " +
+                "hire_date VARCHAR(255), " +
+                "department VARCHAR(255), " +
+                "salary INT) ");
 
         // Fill the database with test data
         insertTestData("src/main/resources/employee_data.csv");
@@ -66,14 +74,24 @@ public class Database implements CommandLineRunner {
                 rs.getInt("salary"))));
     }
 
+    // Add a new employee to the database
+    public void createEmployee(String firstName, String lastName, String email, String phone, String address,
+                            String hireDate, String department, Integer salary) {
+
+        jdbcTemplate.update("INSERT INTO employee(" +
+                        "first_name, last_name, email, phone, address, hire_date, department, salary) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                        firstName, lastName, email, phone, address, hireDate, department, salary);
+    }
+
     // List all data from the database
     public List<Employee> selectAll() {
         return queryDatabase("SELECT * FROM employee");
     }
 
     // Create an SQL statement using the WHERE clause to filter through the database
-    public List<Employee> selectWhere(Integer id, String firstName, String lastName, String email, String phone,
-                                 String address, String hireDate, String department, String salaryOpt, Integer salary) {
+    public List<Employee> selectAllFiltered(Integer id, String firstName, String lastName, String email, String phone,
+                                      String address, String hireDate, String department, String salaryOpt, Integer salary) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT * FROM employee WHERE ");
@@ -102,21 +120,39 @@ public class Database implements CommandLineRunner {
             calledLast = true;
         }
 
-        // If salary wasn't the last condition in the statement, remove the AND clause
+        // If salary wasn't the last condition in the statement, remove the AND clause at the end
         if (!calledLast) { stringBuilder.delete(stringBuilder.length() - 4, stringBuilder.length()); }
 
         // Return the SQL statement that we created
         return queryDatabase(stringBuilder.toString());
     }
 
-    // Add a new employee to the database
-    public void addEmployee(String firstName, String lastName, String email, String phone, String address,
-                            String hireDate, String department, Integer salary) {
+    // Create an SQL statement using the WHERE clause to filter through the database
+    public void updateEmployee(Integer id, String firstName, String lastName, String email, String phone,
+                               String address, String hireDate, String department, Integer salary) {
 
-        jdbcTemplate.update("INSERT INTO employee(" +
-                        "first_name, last_name, email, phone, address, hire_date, department, salary) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                        firstName, lastName, email, phone, address, hireDate, department, salary);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("UPDATE employee SET ");
+        Boolean calledLast = false;
+
+        // Check for all conditions. If it is not null, add it to the SQL statement
+        if (!firstName.isEmpty()) { stringBuilder.append("first_name = '" + firstName + "', "); }
+        if (!lastName.isEmpty()) { stringBuilder.append("last_name = '" + lastName + "', "); }
+        if (!email.isEmpty()) { stringBuilder.append("email = '" + email + "', "); }
+        if (!phone.isEmpty()) { stringBuilder.append("phone = '" + phone + "', "); }
+        if (!address.isEmpty()) { stringBuilder.append("address = '" + address + "', "); }
+        if (!hireDate.isEmpty()) { stringBuilder.append("hire_date = '" + hireDate + "', "); }
+        if (department != null) { stringBuilder.append("department = '" + department + "', "); }
+        if (salary != null) {
+            stringBuilder.append("salary = " + salary);
+            calledLast = true;
+        }
+
+        // If salary wasn't the last condition in the statement, remove the comma at the end
+        if (!calledLast) { stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length()); }
+
+        // Update the database using the SQL statement that we created
+        jdbcTemplate.update(stringBuilder.toString() + " WHERE id = " + id);
     }
 
     // Delete an employee from the database
