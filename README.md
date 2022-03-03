@@ -9,8 +9,8 @@ the database.
 
 ## Screenshots
 Main webpage showing showing the employees stored in the database.
-<img src="Screenshots/IMG_1.png">
+<img src="screenshots/IMG_1.png">
 <br/><br/>
 An example of the response that the user gets after filtering through the database using the 
 specified search results.
-<img src="Screenshots/IMG_2.png">
+<img src="screenshots/IMG_2.png">
